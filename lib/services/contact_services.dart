@@ -2,29 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../model/contacts_model.dart';
 
-// class ContactService {
-//   final CollectionReference _contactsCollection =
-//       FirebaseFirestore.instance.collection('users/user1/contacts');
-
-//   Future<void> createContact(Contact contact) async {
-//     await _contactsCollection.doc().set(contact.toJson());
-//   }
-
-//   Stream<List<Contact>> getContacts() {
-//     return _contactsCollection.snapshots().map((querySnapshot) => querySnapshot
-//         .docs
-//         .map((doc) => Contact.fromJson(doc.data() as Map<String, dynamic>))
-//         .toList());
-//   }
-
-//   Future<void> updateContact(Contact contact) async {
-//     await _contactsCollection.doc(contact.id).update(contact.toJson());
-//   }
-
-//   Future<void> deleteContact(String id) async {
-//     await _contactsCollection.doc(id).delete();
-//   }
-// }
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ContactService {
@@ -33,6 +10,7 @@ class ContactService {
 
   final User _user = FirebaseAuth.instance.currentUser!;
 
+  //Write
   Future<void> createContact(Contact contact) async {
     await _contactsCollection
         .doc(_user.uid)
@@ -41,6 +19,7 @@ class ContactService {
         .set(contact.toJson());
   }
 
+  //read
   Stream<List<Contact>> getContacts() {
     return _contactsCollection
         .doc(_user.uid)
@@ -51,6 +30,7 @@ class ContactService {
             .toList());
   }
 
+  //update
   Future<void> updateContact(Contact contact) async {
     await _contactsCollection
         .doc(_user.uid)
@@ -59,6 +39,7 @@ class ContactService {
         .update(contact.toJson());
   }
 
+  //Delete
   Future<void> deleteContact(String id) async {
     await _contactsCollection
         .doc(_user.uid)
